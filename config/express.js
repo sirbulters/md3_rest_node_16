@@ -3,6 +3,7 @@
  */
 var config = require('./config'),
     express = require('express'),
+    morgan = require('morgan'),
     bodyParser = require('body-parser'),
     methodOverride = require('method-override');
 
@@ -13,6 +14,7 @@ module.exports = function() {
 
     if (process.env.NODE_ENV === 'development') {
         /** hier gaan we straks specifieke development middleware koppelen (bijvoorbeeld een logger) */
+        app.use(morgan('dev'));
     } else if (process.env.NODE_ENV === 'production') {
         /** hier gaan we straks specifieke productie middleware koppelen (bijvoorbeeld compressie) */
     }
@@ -32,6 +34,13 @@ module.exports = function() {
         res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Authorization');
 
         res.setHeader('Access-Control-Allow-Credentials', true);
+
+        next();
+    });
+
+    app.use(function (req, res, next) {
+
+        console.log(5);
 
         next();
     });
