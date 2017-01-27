@@ -7,7 +7,9 @@ module.exports = function(app) {
         .post(user.changeName, user.create);
 
     app.route('/users/:userID')
-        .get(user.read);
+        .get(user.read)
+        .put(user.update)
+        .delete(user.delete);
 
     app.param('userID', user.getUserByID);
 };
